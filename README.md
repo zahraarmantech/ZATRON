@@ -165,6 +165,20 @@ The identical attack that almost perfectly recovers similarity from unprotected 
 
 Reproduce: `benchmarks/zatron_ML_attack.py` (Colab, ~15 min on T4).
 
+### Head-to-Head: ZATRON vs ASPE
+
+ASPE (Wong et al., SIGMOD 2009) is the classic encrypted-kNN baseline. It preserves scalar products exactly — perfect retrieval — but that same property means **any observer can compute document similarities directly from the ciphertexts**, no key and no training required.
+
+| | ASPE (SIGMOD '09) | ZATRON |
+|---|---|---|
+| Retrieval recall@10 (strict set-overlap) | 100% | 81.4% |
+| Observer computes similarity directly | **ρ = +0.87 (leaks)** | ρ = −0.06 (nothing) |
+| Learned attack (MLP, 80K labeled pairs) | **ρ = +0.91, AUC = 0.993** | ρ = +0.01, AUC = 0.518 |
+
+ASPE's perfect recall is bought with total similarity leakage — by design. ZATRON trades a margin on the strictest retrieval metric for chance-level leakage under both direct and learned attacks. (Strict set-overlap is harder than the top-1-in-top-10 metric used in the headline table; same system, stricter ruler. MSMARCO 50,000 passages, identical conditions for both schemes.)
+
+Reproduce: `benchmarks/zatron_vs_ASPE.py` (Colab, ~10 min on T4).
+
 ### Classical Attack Battery
 
 Eight independent attack vectors tested:
