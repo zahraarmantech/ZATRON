@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "zatron"
+version = "0.1.0"
+description = "Privacy-preserving semantic search via multi-channel modular arithmetic"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "MIT"}
+authors = [{name = "Zahra Arman"}]
+keywords = ["semantic-search", "privacy", "embeddings", "encrypted-search", "vector-search", "rag"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Security :: Cryptography",
+    "Intended Audience :: Science/Research",
+]
+dependencies = [
+    "numpy>=1.21",
+    "scikit-learn>=1.0",
+]
+
+[project.optional-dependencies]
+demo = ["sentence-transformers>=2.2", "matplotlib>=3.5"]
+
+[project.urls]
+Homepage = "https://github.com/zahraarmantech/ZATRON"
+Demo = "https://huggingface.co/spaces/zahraarman/ZATRON"
+Repository = "https://github.com/zahraarmantech/ZATRON"
+
+[tool.setuptools.packages.find]
+where = ["src"]
