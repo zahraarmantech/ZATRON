@@ -4,7 +4,7 @@
 
 Privacy-preserving semantic search via multi-channel modular arithmetic. Search sensitive documents by meaning without exposing content — not to the database, not to the server, not even to the key holder.
 
-**[▶ Live Demo](https://huggingface.co/spaces/zahraarman/ZATRON)** · **[GitHub](https://github.com/zahraarmantech/ZATRON)** · Patent Pending · US Provisional Patent Filed 2026
+**[▶ Live Demo](https://huggingface.co/spaces/zahraarman/ZATRON)** · **[GitHub](https://github.com/zahraarmantech/ZATRON)** · **[PyPI](https://pypi.org/project/zatron/)** · `pip install zatron` · Patent Pending
 
 ---
 
@@ -116,19 +116,24 @@ At 1M+ documents, the speedup grows to an estimated 5–10×, since the fine sta
 
 ## Try It
 
+**Install:**
+```bash
+pip install zatron
+```
+
 **Live demo (no install):**
 [https://huggingface.co/spaces/zahraarman/ZATRON](https://huggingface.co/spaces/zahraarman/ZATRON)
 
-**Run locally:**
+**Run the demo locally:**
 ```bash
-pip install sentence-transformers scikit-learn matplotlib
+pip install zatron sentence-transformers matplotlib
 python demo.py
 ```
 
 ## Quick Start
 
 ```python
-from zatron_search import ModularBarcodeSystem
+from zatron import ModularBarcodeSystem
 
 system = ModularBarcodeSystem(key="your-secret-key", n_channels=200)
 system.fit(corpus_embeddings)
