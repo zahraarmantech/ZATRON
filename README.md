@@ -148,6 +148,25 @@ distance = system.compare(query_bc, barcodes[0])
 
 ## Security
 
+### Learned Inversion Attack (Neural Attacker)
+
+Statistical tests only rule out simple attackers. The stronger question: can a **neural network**, trained on labeled examples, learn to recover similarity from ZATRON barcodes?
+
+**Threat model.** Known-plaintext observer: the attacker sees stored barcodes and obtains ~80,000 document pairs with true cosine similarities (a partial plaintext leak). A linear probe and a 3-layer MLP are trained on per-prime circular-difference features to predict similarity of unseen pairs. Train/test pairs share no anchor documents.
+
+**Result (MSMARCO, 50,000 passages, 100,000 pairs):**
+
+| Input the attacker sees | Linear probe | MLP (3-layer) |
+|---|---|---|
+| Unprotected quantized signals (control) | ρ = 0.79, AUC = 0.985 | **ρ = 0.90, AUC = 0.999** |
+| ZATRON masked barcodes | ρ = 0.00, AUC = 0.498 | **ρ = 0.00, AUC = 0.505** |
+
+The identical attack that almost perfectly recovers similarity from unprotected signals performs **exactly at chance level** against ZATRON barcodes — with 80,000 labeled training pairs at its disposal.
+
+Reproduce: `benchmarks/zatron_ML_attack.py` (Colab, ~15 min on T4).
+
+### Classical Attack Battery
+
 Eight independent attack vectors tested:
 
 | Attack | Result | Status |
@@ -161,7 +180,7 @@ Eight independent attack vectors tested:
 | Timing side-channel | p = 1.00 | Pass |
 | CRT reconstruction | \|r\| = 0.01 | Pass |
 
-**Threat model**: Protected against unauthorized database observers. The key holder computes distances but never reconstructs raw embeddings. This is a randomized privacy-preserving encoding, distinct from reversible block cipher encryption.
+**Threat model**: Protected against unauthorized database observers — including learned (neural) attackers with known-plaintext training data, per the table above. The key holder computes distances but never reconstructs raw embeddings; a key holder computing many pairwise distances can still partially recover embedding geometry via MDS (ρ ≈ 0.35 after the log transform), which is inherent to any distance-preserving scheme, FHE included. This is a randomized privacy-preserving encoding, distinct from reversible block cipher encryption. Independent cryptographic review remains the appropriate bar for production use.
 
 Formal proofs under PRF assumption (HMAC-SHA256) in `paper/Formal_Security_Proof.pdf`.
 
@@ -175,6 +194,9 @@ ZATRON/
 ├── generate_visuals.py           # Generate comparison images
 ├── zatron_comparison.png         # t-SNE visualization
 ├── zatron_attack.png             # Attack analysis visualization
+├── benchmarks/
+│   ├── zatron_ML_attack.py       # Learned inversion attack (reproduce security table)
+│   └── zatron_vs_ASPE.py         # Head-to-head vs ASPE (SIGMOD'09)
 ├── demo/
 │   └── encrypted_search_demo.jsx # Interactive web demo
 ├── paper/
