@@ -1,10 +1,16 @@
-# ZATRON
+# Stop choosing between smart search and private data.
 
-**Zero-Access Transformed Retrieval Over Noise**
+### ZATRON gives you both — 98% retrieval quality on 626K documents, and the server can't read a thing.
 
-Privacy-preserving semantic search via multi-channel modular arithmetic. Search sensitive documents by meaning without exposing content — not to the database, not to the server, not even to the key holder.
+A neural network trained on 80,000 labeled pairs couldn't recover document similarity from ZATRON's barcodes (AUC 0.505 — chance level), while the same attack broke unprotected embeddings almost perfectly (AUC 0.999).
 
-**[▶ Live Demo](https://huggingface.co/spaces/zahraarman/ZATRON)** · **[GitHub](https://github.com/zahraarmantech/ZATRON)** · **[PyPI](https://pypi.org/project/zatron/)** · `pip install zatron` · Patent Pending
+```bash
+pip install zatron
+```
+
+**[▶ Live Demo](https://huggingface.co/spaces/zahraarman/ZATRON)** · **[PyPI](https://pypi.org/project/zatron/)** · **[Benchmarks](https://github.com/zahraarmantech/ZATRON/tree/main/benchmarks)** · Patent Pending
+
+*ZATRON (Zero-Access Transformed Retrieval Over Noise) turns embeddings into modular barcodes. Search still works; structure disappears. Private by math, not by promise.*
 
 ---
 
